@@ -1,0 +1,71 @@
+plugins {
+    id 'java'
+    id 'fr.il_totore.manadrop' version '0.4.1-SNAPSHOT'
+}
+
+group 'com.metricv'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+java {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+
+spigot {
+    desc {
+        named 'ElytraHover' //Default: the project name
+        version project.version //Default: the project version
+        authors 'MetricVoid'
+        main 'com.metricv.elytrahover.PluginMain'
+
+        command {
+            named 'efly'
+            description 'Turn elytra hovering on or off.'
+            aliases 'ehover'
+        }
+
+        permission {
+            named 'elytrahover.*'
+            description 'All perms'
+            defaultType 'grant_op'
+            child {
+                named 'elytrahover.toggle'
+                inherit true
+            }
+
+            child {
+                named 'elytrahover.manage'
+                inherit true
+            }
+        }
+
+        permission {
+            named 'elytrahover.toggle'
+            description 'Turn Elytra Hovering on or off.'
+            defaultType 'grant_player'
+        }
+
+        permission {
+            named 'elytrahover.manage'
+            description 'Allow management commands like reload.'
+            defaultType 'deny_player'
+        }
+    }
+}
+// processResources.finalizedBy(spigotPlugin)

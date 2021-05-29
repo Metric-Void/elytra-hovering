@@ -1,0 +1,10 @@
+message:
+  FlyingOn: "Elytra Hovering turned on."
+  FlyingOff: "Elytra Hovering turned off."
+  noelytra: "You took your elytra off. Flying will be disabled immediately."
+  warning: "Your elytra has less than 10% durability. Consider landing now."
+  OnWithoutElytra: "You tried to turn flying on without elytra. Please wear the elytra before this command."
+  NoTogglePerm: "You do not have the permission (elytrahover.toggle) to turn elytra hovering on or off"
+  NoManagePerm: "You do not have the permission (elytrahover.manage) to manage settings."
+  ConfigReloaded: "Configuration Reloaded."
+TickPerDamage: 10

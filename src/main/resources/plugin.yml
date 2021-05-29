@@ -1,0 +1,25 @@
+name: ElytraHover
+main: com.metricv.elytrahover.PluginMain
+version: 1.0-SNAPSHOT
+author: MetricVoid
+commands:
+  efly:
+    description: Turn elytra hovering on or off.
+    aliases:
+    - ehover
+    usage: /efly <on|off|reload>
+permissions:
+  elytrahover.toggle:
+    description: Turn Elytra Hovering on or off.
+    default: true
+  elytrahover.manage:
+    description: Allow management commands like reload.
+    default: op
+  'elytrahover.*':
+    description: All permissions.
+    default: op
+    children:
+      elytrahover:
+        toggle: true
+        manage: true
+
