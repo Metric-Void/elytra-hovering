@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandHandler implements CommandExecutor {
@@ -29,10 +30,9 @@ public class CommandHandler implements CommandExecutor {
                         sender.sendMessage(
                             config.getString("message.NoTogglePerm",
                                 "Error. message.NoTogglePerm not found"));
-                        plugin.getLogger().info(String.valueOf(sender.hasPermission("elytrahover.toggle")));
-                        plugin.getLogger().info(String.valueOf(sender.isPermissionSet("elytrahover.toggle")));
                     } else if (sender.getInventory().getChestplate() != null
-                        && sender.getInventory().getChestplate().getType() == Material.ELYTRA) {
+                        && sender.getInventory().getChestplate().getType() == Material.ELYTRA
+                        && ((Damageable)sender.getInventory().getChestplate().getItemMeta()).getDamage() < Material.ELYTRA.getMaxDurability()) {
                         listener.addFlyer(sender);
                         sender.sendMessage(
                             config.getString("message.FlyingOn", "Error. message.FlyingOn not found."));

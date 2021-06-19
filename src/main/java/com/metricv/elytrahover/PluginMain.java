@@ -7,7 +7,6 @@ public class PluginMain extends JavaPlugin {
     @Override
     public void onDisable() {
         super.onDisable();
-
     }
 
     @Override

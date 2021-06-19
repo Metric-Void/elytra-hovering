@@ -31,16 +31,17 @@ message:
 TickPerDamage: 10
 ```
 
-## 配置文件解析
+## 参考中文配置文件
 ```yaml
 message:
-  FlyingOn: "鞘翅飞行模式开启"
-  FlyingOff: "鞘翅飞行模式关闭"
-  noelytra: "空中飞行的时候把鞘翅拿掉了，飞行模式将立刻禁用"
-  warning: "警告，鞘翅耐久度低于10%"
-  OnWithoutElytra: "在没有鞘翅时执行/efly on"
-  NoTogglePerm: "没有开关飞行的权限"
-  NoManagePerm: "没有重载配置文件的权限"
-  ConfigReloaded: "配置文件重载成功的消息"
-TickPerDamage: 10 # 每多少tick消耗一点鞘翅的耐久。
+  FlyingOn: "§9§l[鞘翅飞行] §r飞行模式已开启"
+  FlyingOff: "§9§l[鞘翅飞行] §r飞行模式已关闭"
+  noelytra: "§9§l[鞘翅飞行] §c§l[警告] §r你把鞘翅脱下来了，或鞘翅耐久度已耗尽！飞行功能将立刻禁用。"
+  warning: "§9§l[鞘翅飞行] §c§l[警告] §r你的鞘翅剩余耐久低于§c10%§r。请考虑立刻降落"
+  OnWithoutElytra: "§9§l[鞘翅飞行] §r请先装备耐久度未耗尽的鞘翅再启用飞行"
+  NoTogglePerm: "§9§l[鞘翅飞行] §r 你没有权限开关鞘翅飞行模式 (elytrahover.toggle)"
+  NoManagePerm: "§9§l[鞘翅飞行] §r 你没有权限管理设置 (elytrahover.manage)"
+  ConfigReloaded: "§9§l[鞘翅飞行] §r 配置已重载"
+  DurabilityOut: "§9§l[鞘翅飞行] §r 鞘翅耐久度耗尽，飞行模式已关闭。"
+TickPerDamage: 10
 ```

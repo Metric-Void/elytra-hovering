@@ -7,4 +7,5 @@ message:
   NoTogglePerm: "You do not have the permission (elytrahover.toggle) to turn elytra hovering on or off"
   NoManagePerm: "You do not have the permission (elytrahover.manage) to manage settings."
   ConfigReloaded: "Configuration Reloaded."
+  DurabilityOut: "Your elytra has drained all durability. You will stop flying immediately."
 TickPerDamage: 10

@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -21,6 +22,7 @@ public class TickListener extends BukkitRunnable {
     private final Map<Player, Integer> flyCount;
     private final Set<Player> warned;
     JavaPlugin plugin;
+    SecureRandom rnd = new SecureRandom();
 
     TickListener(Server svr, JavaPlugin plugin) {
         this.server = svr;
@@ -36,10 +38,17 @@ public class TickListener extends BukkitRunnable {
             if((p.getGameMode() == GameMode.SURVIVAL || p.getGameMode() == GameMode.ADVENTURE)
                     && flyCount.containsKey(p) && p.isFlying()) {
                 if(p.getInventory().getChestplate() != null
-                      && p.getInventory().getChestplate().getType() == Material.ELYTRA) {
+                      && p.getInventory().getChestplate().getType() == Material.ELYTRA
+                      && ((Damageable)p.getInventory().getChestplate().getItemMeta()).getDamage() < Material.ELYTRA.getMaxDurability()) {
                     flyCount.put(p, flyCount.get(p) + 1);
                     if(flyCount.get(p) > conf.getInt("TickPerDamage", 10)) {
-                        damageElytra(p.getInventory().getChestplate());
+                        if(!damageElytra(p.getInventory().getChestplate())) {
+                            p.sendMessage(conf.getString("message.DurabilityOut", "Error: message.DurabilityOut undefined."));
+                            p.setAllowFlight(false);
+                            p.setFlying(false);
+                            flyCount.remove(p);
+                            warned.remove(p);
+                        }
                         flyCount.put(p, flyCount.get(p) - conf.getInt("TickPerDamage", 10));
                     }
 
@@ -51,10 +60,11 @@ public class TickListener extends BukkitRunnable {
                         }
                     }
                 } else {
-                    p.chat(conf.getString("message.noelytra","You lost your elytra. Flying will be disabled immediately."));
+                    p.sendMessage(conf.getString("message.noelytra","You lost your elytra. Flying will be disabled immediately."));
                     p.setAllowFlight(false);
                     p.setFlying(false);
                     flyCount.remove(p);
+                    warned.remove(p);
                 }
             } else warned.remove(p);
         });
@@ -72,15 +82,16 @@ public class TickListener extends BukkitRunnable {
         warned.remove(p);
     }
 
-    private void damageElytra(ItemStack elytra) {
+    private boolean damageElytra(ItemStack elytra) {
         int durabilityLevel = elytra.getEnchantments().getOrDefault(Enchantment.DURABILITY, 0);
         double chance = (1.0/(durabilityLevel+1));
-        Random rnd = new Random(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
         double rand = rnd.nextDouble();
         if(rand < chance) {
             Damageable damageable = (Damageable) elytra.getItemMeta();
             damageable.setDamage(damageable.getDamage() + 1);
             elytra.setItemMeta((ItemMeta) damageable);
+            return damageable.getDamage() < elytra.getType().getMaxDurability();
         }
+        return true;
     }
 }
